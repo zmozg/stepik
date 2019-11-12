@@ -22,5 +22,5 @@ while True:
             break
         if data == 'close':
             sclient.close()
-        conn.send(data)
+        sclient.send(data)
     
