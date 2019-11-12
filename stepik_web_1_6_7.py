@@ -9,4 +9,6 @@ if child_pid == 0:
     while True:
         sclient, addr = s.accept()
         data = sclient.recv(1024)
+        if not data or data == 'close':
+            sclient.close()
         sclient.send(data)
