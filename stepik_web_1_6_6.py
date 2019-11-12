@@ -1,13 +1,13 @@
 import socket
 
-def server_receive(sock, msglen):
-    msg = ''
-    while len(msg) < msglen:
-        chunk = sock.recv(msglen-len(msg))
-        if chunk == '':
-            raise RuntimeError('br')
-        msg += chunk
-    return msg
+ #def server_receive(sock, msglen):
+ #    msg = ''
+ #    while len(msg) < msglen:
+ #        chunk = sock.recv(msglen-len(msg))
+ #        if chunk == '':
+ #            raise RuntimeError('br')
+ #        msg += chunk
+ #    return msg
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('0.0.0.0', 2222))
