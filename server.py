@@ -5,7 +5,6 @@ def server_receive(sock, msglen):
     while len(msg) < msglen:
         chunk = sock.recv(msglen-len(msg))
         if chunk == '':
-            sclient.close()
             raise RuntimeError('br')
         msg += chunk
     return msg
@@ -17,10 +16,9 @@ s.listen(10)
 while True:
     sclient, addr = s.accept()
     while True:
-        data = server_receive(sclient, 1024)
-        if not data:
+        data = sclient.recv(1024)
+        if not data or data == 'close':
             break
-        if data == 'close':
-            sclient.close()
         sclient.send(data)
+    sclient.close()
     
