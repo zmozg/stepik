@@ -1,7 +1,7 @@
 import socket
 import os
 
-def hendle_client(soc):
+def handle_client(soc):
     while True:
         data = soc.recv(1024)
         if not data or data == 'close':
@@ -16,7 +16,7 @@ def server(s):
        sclient, addr = s.accept()
        child_pid = os.fork()
        if child_pid == 0:
-           hendel_client(sclient)
+           handle_client(sclient)
        else:
            client += 1
                
