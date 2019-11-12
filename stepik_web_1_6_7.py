@@ -15,10 +15,10 @@ def server(s):
    while client <= 10:
        sclient, addr = s.accept()
        child_pid = os.fork()
-           if child_pid == 0:
-               hendel_client(sclient)
-           else:
-               client += 1
+       if child_pid == 0:
+           hendel_client(sclient)
+       else:
+           client += 1
                
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
