@@ -3,7 +3,7 @@ import os
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('0.0.0.0', 2222))
-s.listen(5)
+s.listen(15)
 while True:
     client = 1
     sclient, addr = s.accept()
@@ -14,6 +14,8 @@ while True:
             if not data or data == 'close':
                 break
             sclient.send(data)
-            print(sclient, client, data, 'OK')
+            client += 1
+            print(sclient.getpeername(), client, data, 'OK')
+        sclient.close()   
+    else:
         sclient.close()
-            client += 1     
