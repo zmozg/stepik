@@ -20,7 +20,7 @@ from qa.views import test
 urlpatterns = [
     url(r'^$', test, name='base'),
     url(r'^login/$', test, name='login'),
-    url(r'^singup/$', test, name='singup'),
+    url(r'^signup/$', test, name='singup'),
     url(r'^question/(?P<pk>\d+)/$', test, name='question'),
     url(r'^ask/$', test, name='ask'),
     url(r'^popular/$', test, name='popular'),
