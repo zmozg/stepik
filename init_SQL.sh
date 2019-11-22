@@ -5,7 +5,7 @@ DB_USER_NAME="box"
 #delete old settings
 #sudo rm -f /etc/mysql/conf.d/mysql.conf
 #Start MYSQL
-#sudo /etc/init.d/mysql start
+sudo /etc/init.d/mysql start
 #Create DataBase
 sudo mysql -u root -e "create database if not exists $DB_NAME;"
 #Create db_user with privileges to manage this database

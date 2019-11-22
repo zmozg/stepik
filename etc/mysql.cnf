@@ -2,5 +2,3 @@
 database = ask
 host = localhost
 user = box
-password = box
-default-character-set = utf8

@@ -11,6 +11,6 @@ sudo /etc/init.d/nginx restart
 #sudo ln -sf $PROJ_DIR/etc/gunicorn.conf /etc/gunicorn.d/gunicorn.conf
 #sudo /etc/init.d/gunicorn restart
 
-gunicorn -b 0.0.0.0:8080 web.hello:wsgi_application &
+#gunicorn -b 0.0.0.0:8080 web.hello:wsgi_application &
 cd ./ask
 gunicorn -b 0.0.0.0:8000 ask.wsgi:application
