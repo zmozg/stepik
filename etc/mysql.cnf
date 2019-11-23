@@ -2,3 +2,4 @@
 database = ask
 host = localhost
 user = box
+password = box
