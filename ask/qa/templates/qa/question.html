@@ -1,0 +1,17 @@
+{% extends "qa/base.html" %}
+
+{% block content %}
+<hr>
+<p>single question       +++ add answer +++</p>
+{{ question.title }}
+<br>
+
+{{ question.text }}
+
+<p> answers: </p>
+
+{% for answer in answers %}
+    {{ answer }}
+{% endfor %}
+
+{% endblock %}

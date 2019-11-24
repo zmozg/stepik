@@ -1,0 +1,11 @@
+{% extends "qa/base.html" %}
+
+{% block content %}
+
+<p>questions list</p>
+<ul>
+{% for question in questions %}
+    <li><a href="{% url 'question' pk=question.pk%}">{{ question }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -16,5 +16,5 @@ sudo mysql -u root -e "grant all privileges on $DB_NAME.* to\
     '$DB_USER_NAME'@'localhost' with grant option;"
 
 #make migrations
-$DJ_PROJ_DIR/manage.py makemigrations
-$DJ_PROJ_DIR/manage.py migrate
+python3 $DJ_PROJ_DIR/manage.py makemigrations
+python3 $DJ_PROJ_DIR/manage.py migrate

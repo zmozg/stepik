@@ -5,10 +5,13 @@
     <title>"Hello WORLD"</title>
   </head>
   <body>
-    <h1>HELLO</h1>
-    A
-    {% block test %}B{% endblock %}
-    C
-    
+    <a href="{% url 'new' %}"><h1>STEPIK STACK_OVER_FLOW</h1></a>
+    {{ test }}
+
+    <a href="{% url 'new'%}?rand=True">new_question</a>
+
+    {% block content %}{% endblock %}
+
+
   </body>
 </html>
