@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from qa.models import Question, Answer
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from qa.forms import AskForm, AnswerForm
 
 def test(request):
     return render(request, 'qa/base.html',{
@@ -44,6 +45,15 @@ def new_questions(request):
     return render(request, 'qa/list.html', {
         'questions': page.object_list,
     })
+
+def add_question(request):
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form = AskForm()
+    return render(request, '')
 
 # def add_random_question():
 #     last = Question.objects.count()
