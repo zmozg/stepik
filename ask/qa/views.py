@@ -1,8 +1,9 @@
 #from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from qa.models import Question, Answer
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from qa.models import Question, Answer
 from qa.forms import AskForm, AnswerForm
 
 def test(request):
@@ -13,11 +14,20 @@ def test(request):
 def single_question(request, pk):
     question = get_object_or_404(Question, pk=pk)
     answers = question.answer_set.all()
+    url = question.get_url()
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form.save()
 
-    return render(request, 'qa/question.html',{
-        'question': question,
-        'answers': answers,
-    })
+        return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm()
+        return render(request, 'qa/question.html',{
+            'question': question,
+            'answers': answers,
+            'form': form,
+        })
 
 def paginator_list(request, questions):
     limit = request.GET.get('limit', 10)
@@ -30,7 +40,6 @@ def paginator_list(request, questions):
     except EmptyPage:
         page = paginator.page(paginator.num_pages)
     return page
-
 
 def popular_questions(request):
     questions = Question.objects.popular()
@@ -50,10 +59,14 @@ def add_question(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
         if form.is_valid():
-            pass
+            question = form.save()
+            url = question.get_url()
+        return HttpResponseRedirect(url)
     else:
         form = AskForm()
-    return render(request, '')
+    return render(request, 'qa/ask.html', {
+        'form':form
+    })
 
 # def add_random_question():
 #     last = Question.objects.count()

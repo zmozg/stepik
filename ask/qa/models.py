@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class QuestionManager(models.Manager):
@@ -19,6 +20,9 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_url(self):
+        return reverse('question', kwargs = {'pk':self.pk})
 
 class Answer(models.Model):
     text = models.TextField()
