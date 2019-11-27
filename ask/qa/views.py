@@ -15,10 +15,11 @@ def single_question(request, pk):
     question = get_object_or_404(Question, pk=pk)
     answers = question.answer_set.all()
     if request.method == "POST":
-        form = AnswerForm(request.POST)
+        form = AnswerForm(request.POST, initial={'question':pk})
         if form.is_valid():
-            print("valid")
             form.save()
+        else:
+            HttpResponse('200')
         answers = question.answer_set.all()
         url = question.get_url()
         return HttpResponseRedirect(url)
