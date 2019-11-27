@@ -24,11 +24,11 @@ def single_question(request, pk):
         return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question':pk})
-        return render(request, 'qa/question.html',{
-            'question': question,
-            'answers': answers,
-            'form': form,
-        })
+    return render(request, 'qa/question.html',{
+        'question': question,
+        'answers': answers,
+        'form': form,
+    })
 
 def paginator_list(request, questions):
     limit = request.GET.get('limit', 10)
