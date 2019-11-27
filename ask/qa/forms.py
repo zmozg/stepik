@@ -17,6 +17,20 @@ class AskForm(forms.Form):
         question.save()
         return question
 
+    def clean_text(self):
+        print('clean_text')
+        text = self.cleaned_data['text']
+        if text == None or text.strip() == '':
+            raise forms.ValidationError
+        return text
+
+    def clean_title(self):
+        print('clean_title', self.cleaned_data)
+        title = self.cleaned_data['title']
+        if title == None or text.strip() == '':
+            raise forms.ValidationError
+        return title
+
 
 class AnswerForm(forms.Form):
 
@@ -24,11 +38,22 @@ class AnswerForm(forms.Form):
     question = forms.IntegerField(widget=forms.HiddenInput)
 
     def clean(self):
+        print('clean')
         data = self.cleaned_data
         return data
 
+    def clean_text(self):
+        print('clean_t')
+        text = self.cleaned_data['text']
+        if text == None or text.strip() == '':
+            raise forms.ValidationError
+        return text
+
     def clean_question(self):
+        print('clean_q')
         question = self.cleaned_data['question']
+        if question == None:
+            raise forms.ValidationError('net ego')
         try:
             question = Question.objects.get(pk=question)
         except Question.DoesNotExist:
@@ -36,6 +61,7 @@ class AnswerForm(forms.Form):
         return question
 
     def save(self):
+        print('save')
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
