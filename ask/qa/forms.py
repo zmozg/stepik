@@ -36,7 +36,6 @@ class AnswerForm(forms.Form):
     question = forms.IntegerField(widget=forms.HiddenInput)
 
     def clean(self):
-        print('clean')
         data = self.cleaned_data
         return data
 

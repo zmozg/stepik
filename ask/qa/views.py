@@ -19,7 +19,7 @@ def single_question(request, pk):
         if form.is_valid():
             form.save()
         else:
-            HttpResponse('200')
+            return HttpResponse('200')
         answers = question.answer_set.all()
         url = question.get_url()
         return HttpResponseRedirect(url)
