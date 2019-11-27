@@ -1,4 +1,5 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 
 from .models import Question, Answer
 
@@ -11,10 +12,6 @@ class AskForm(forms.Form):
         data = self.cleaned_data
         return data
 
-    def clean_question(self):
-        question = self.cleaned_data['question']
-        return question
-
     def save(self):
         question = Question(**self.cleaned_data)
         question.save()
@@ -23,12 +20,20 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
 
-    text = forms.CharField(widget=forms.Textarea)
+    text = forms.CharField(widget=forms.Textarea)#, initial="Put youre answer here...")
     question = forms.IntegerField(widget=forms.HiddenInput)
 
     def clean(self):
         data = self.cleaned_data
         return data
+
+    def clean_question(self):
+        question = self.cleaned_data['question']
+        try:
+            question = Question.objects.get(pk=question)
+        except Question.DoesNotExist:
+            raise forms.ValidationError("Question does not exist")
+        return question
 
     def save(self):
         answer = Answer(**self.cleaned_data)

@@ -14,15 +14,16 @@ def test(request):
 def single_question(request, pk):
     question = get_object_or_404(Question, pk=pk)
     answers = question.answer_set.all()
-    url = question.get_url()
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
+            print("valid")
             form.save()
-
+            answers = question.answer_set.all()
+        url = question.get_url()
         return HttpResponseRedirect(url)
     else:
-        form = AnswerForm()
+        form = AnswerForm(initial={'question':pk})
         return render(request, 'qa/question.html',{
             'question': question,
             'answers': answers,
