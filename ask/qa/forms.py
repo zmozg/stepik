@@ -1,5 +1,7 @@
 from django import forms
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 from .models import Question, Answer
 
@@ -59,3 +61,59 @@ class AnswerForm(forms.Form):
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
+
+class SignupForm(forms.Form):
+    username = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if username == None or username.strip() == '':
+            raise forms.ValidationError("Empty Field")
+        try:
+            User.objects.get(username=username)
+            raise forms.ValidationError("Est yge")
+        except User.DoesNotExist:
+            pass
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if password == None or password.strip() == '':
+            self.empty_password = password
+        return make_password(password)
+
+    def save(self):
+        user = User(**self.cleaned_data)
+        user.save()
+        return user
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if username == None or username.strip() == '':
+            raise forms.ValidationError("Empty Field")
+        
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if password == None or password.strip() == '':
+            raise forms.ValidationError("Empty Field")
+        return password.strip()
+    
+    def clean(self):
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise forms.ValidationError("Uncorrect user/password")
+        if not user.check_password(password):
+            raise forms.ValidationError("Uncorrect user/password")
+
+

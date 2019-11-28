@@ -1,0 +1,14 @@
+{% extends "qa/base.html" %}
+
+{% block content %}
+
+<p> login us </p>
+<br>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">login</button>
+</form>
+
+{% endblock %}
