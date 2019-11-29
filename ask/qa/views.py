@@ -25,6 +25,7 @@ def single_question(request, pk):
     if request.method == "POST":
         form = AnswerForm(request.POST, initial={'question': pk})
         if form.is_valid():
+            form._user = request.user
             form.save()
         else:
             return HttpResponse('200')
@@ -74,6 +75,7 @@ def add_question(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
         if form.is_valid():
+            form._user = request.user
             question = form.save()
             url = question.get_url()
         return HttpResponseRedirect(url)

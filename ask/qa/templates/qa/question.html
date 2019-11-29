@@ -9,10 +9,11 @@
 {{ question.text }}
 
 <p> answers: </p>
-
-{% for answer in answers %}
-    {{ answer }}
-{% endfor %}
+<ul>
+    {% for answer in answers %}
+        <li> {{ answer }} {{ answer.author }}</li>
+    {% endfor %}
+</ul>
 <hr>
 <p>Youre answer:</p>
 <form method="POST">
